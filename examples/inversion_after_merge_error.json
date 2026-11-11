@@ -1,0 +1,23 @@
+{
+  "detail": {
+    "status": "invalid_timetable",
+    "message": "合并后的时刻表不满足到发顺序，整批未提交。",
+    "base_revision": 0,
+    "current_revision": 1,
+    "violations": [
+      {
+        "code": "departure_after_next_arrival",
+        "trip_id": "T1",
+        "stop_seq": 1,
+        "next_stop_seq": 2,
+        "station_name": "甲站",
+        "next_station_name": "乙站",
+        "field": "departure_sec",
+        "next_field": "arrival_sec",
+        "departure_sec": 180,
+        "next_arrival_sec": 150,
+        "message": "车次 T1 停站 1（甲站）发车 180 秒晚于下一停站 2（乙站）到站 150 秒"
+      }
+    ]
+  }
+}

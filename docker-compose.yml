@@ -1,14 +1,33 @@
 services:
-  api:
+  init-data:
+    image: timetable-merge-api:latest
+    container_name: timetable-data-init
+    user: "0:0"
+    command:
+      - sh
+      - -c
+      - "mkdir -p /data && chown -R app:app /data && chmod 0770 /data"
+    volumes:
+      - timetable-data:/data
+    restart: "no"
+
+  api1:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: bus-od-suppression-api
+    image: timetable-merge-api:latest
+    container_name: timetable-api-1
     ports:
-      - "${HOST_PORT:-8000}:8000"
+      - "${API1_PORT:-8000}:8000"
     environment:
+      TIMETABLE_DB_PATH: /data/timetable.db
       TZ: "${TZ:-Asia/Shanghai}"
+    volumes:
+      - timetable-data:/data
     restart: unless-stopped
+    depends_on:
+      init-data:
+        condition: service_completed_successfully
     healthcheck:
       test:
         - CMD
@@ -18,4 +37,33 @@ services:
       interval: 10s
       timeout: 3s
       retries: 5
-      start_period: 5s
+      start_period: 10s
+
+  api2:
+    image: timetable-merge-api:latest
+    container_name: timetable-api-2
+    ports:
+      - "${API2_PORT:-8001}:8000"
+    environment:
+      TIMETABLE_DB_PATH: /data/timetable.db
+      TZ: "${TZ:-Asia/Shanghai}"
+    volumes:
+      - timetable-data:/data
+    restart: unless-stopped
+    depends_on:
+      api1:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=2).read()"
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  timetable-data:
+    name: timetable-merge-data

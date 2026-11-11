@@ -1,0 +1,27 @@
+{
+  "trips": [
+    {
+      "trip_id": "T1",
+      "stops": [
+        {
+          "stop_seq": 1,
+          "station_name": "甲站",
+          "arrival_sec": 0,
+          "departure_sec": 100
+        },
+        {
+          "stop_seq": 2,
+          "station_name": "乙站",
+          "arrival_sec": 200,
+          "departure_sec": 300
+        },
+        {
+          "stop_seq": 3,
+          "station_name": "丙站",
+          "arrival_sec": 400,
+          "departure_sec": 500
+        }
+      ]
+    }
+  ]
+}

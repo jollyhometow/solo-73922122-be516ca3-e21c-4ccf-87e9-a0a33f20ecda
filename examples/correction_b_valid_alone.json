@@ -1,0 +1,10 @@
+{
+  "base_revision": 0,
+  "changes": [
+    {
+      "trip_id": "T1",
+      "stop_seq": 2,
+      "arrival_sec": 150
+    }
+  ]
+}

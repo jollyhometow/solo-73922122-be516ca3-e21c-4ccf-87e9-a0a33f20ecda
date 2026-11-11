@@ -1,4 +1,3 @@
-.gitignore
 __pycache__/
 *.py[cod]
 .venv/
@@ -7,3 +6,7 @@ venv/
 .coverage
 htmlcov/
 *.log
+data/
+*.db
+*.db-wal
+*.db-shm

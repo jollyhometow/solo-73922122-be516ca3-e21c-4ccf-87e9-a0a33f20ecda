@@ -1,3 +1,3 @@
-"""Bus OD passenger-flow complementary suppression service."""
+"""Bus timetable correction merge service."""
 
 __version__ = "1.0.0"
